@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Kru Pai Classroom — Tense Matching Challenge – Set 2 (TH ➜ EN)</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700;900&family=Rubik:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bgA:#06122b;
+  --bgB:#0b2a5a;
+  --card: rgba(255,255,255,.92);
+  --ink:#0b1020;
+  --muted:#6b7a90;
+  --blue:#37b8ff;
+  --blue2:#e7f7ff;
+  --yellow:#ffd84a;
+  --yellow2:#fff7cf;
+  --ok:#22c55e;
+  --bad:#ef4444;
+  --shadow: 0 18px 48px rgba(0,0,0,.18);
+  --shadow2: 0 12px 30px rgba(55,184,255,.18);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;
+  background:
+    radial-gradient(900px 600px at 20% 10%, rgba(55,184,255,.35), transparent 55%),
+    radial-gradient(900px 600px at 80% 30%, rgba(255,216,74,.26), transparent 55%),
+    linear-gradient(180deg, var(--bgA), var(--bgB));
+  font-family:"Noto Sans Thai","Rubik",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  overflow-x:hidden;
+}
+body:before{
+  content:""; position:fixed; inset:0; pointer-events:none;
+  background:
+    linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size:56px 56px; opacity:.25;
+  mask-image: radial-gradient(60% 60% at 50% 30%, #000 0%, transparent 80%);
+  animation:gridMove 14s linear infinite;
+}
+@keyframes gridMove{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-56px,56px,0)}}
+
+.header{position:sticky;top:0;z-index:10;
+  background: linear-gradient(90deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+  border-bottom:1px solid rgba(255,255,255,.16);
+  backdrop-filter: blur(10px);
+}
+.banner{max-width:1000px;margin:auto;display:flex;align-items:center;gap:12px;padding:14px 16px}
+.logo{display:grid;place-items:center;width:46px;height:46px;border-radius:16px;
+  background: radial-gradient(circle at 30% 30%, var(--yellow), var(--blue));
+  color:#06122b;font-weight:900;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.18), 0 12px 28px rgba(55,184,255,.35);
+}
+.brand{font-weight:900;font-size:clamp(18px,2.6vw,28px);letter-spacing:.3px;color:#eaf6ff}
+.sub{margin-left:auto;font-size:13px;color:rgba(234,246,255,.85)}
+
+.wrap{max-width:1000px;margin:22px auto 34px;padding:0 16px}
+.card{background:var(--card); border:1px solid rgba(255,255,255,.55); border-radius:24px; box-shadow:var(--shadow)}
+
+.start{padding:26px; display:grid; gap:18px; justify-items:center; text-align:center}
+.bigtitle{font-weight:900;font-size:clamp(26px,4.6vw,48px);
+  background: linear-gradient(90deg, var(--blue), var(--yellow));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.tagline{font-size:clamp(14px,2.4vw,18px); color:#24324a}
+.input{display:flex;gap:10px;align-items:center; background:linear-gradient(180deg,#ffffff, #f4fbff);
+  padding:12px 14px;border-radius:16px;border:2px solid #dbeafe}
+.input input{border:none;background:transparent; outline:none; font-size:18px; min-width:220px}
+
+.btn{border:none; cursor:pointer; padding:14px 18px;border-radius:16px;
+  background: linear-gradient(180deg, var(--blue), #2a8fe8);
+  color:#06122b; font-weight:900;
+  box-shadow: 0 12px 0 #1b5fa0, 0 20px 34px rgba(55,184,255,.30);
+  transform:translateY(0); transition:.18s ease;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(1px)}
+.btn.alt{background: linear-gradient(180deg, var(--yellow), #ffb300);
+  box-shadow: 0 12px 0 #b27700, 0 20px 34px rgba(255,216,74,.30)}
+.note{font-size:12px;color:#475569}
+
+.hud{display:grid; grid-template-columns:1fr auto auto; align-items:center; gap:10px; padding:14px 16px;
+  border-bottom:1px dashed rgba(15,23,42,.18)}
+.hud .pill{background: linear-gradient(180deg, #ffffff, #f7fbff);
+  border:2px solid rgba(55,184,255,.22); padding:8px 12px;border-radius:999px;font-weight:900;color:#22324b}
+.hud .score{border-color: rgba(255,216,74,.40)}
+.progress{height:10px;background:rgba(6,18,43,.08);border-radius:999px;overflow:hidden;border:1px solid rgba(6,18,43,.14)}
+.progress>div{height:100%;background: linear-gradient(90deg, var(--blue), var(--yellow)); width:0%;
+  box-shadow: 0 0 20px rgba(55,184,255,.35)}
+
+.stage{display:grid; grid-template-areas:"qbox" "fb" "opts"; gap:8px; padding:18px 16px 28px 16px}
+.qbox{grid-area:qbox; background:linear-gradient(180deg,#ffffff,#f6fbff);
+  border:2px solid rgba(55,184,255,.18); border-radius:20px; padding:18px; box-shadow:var(--shadow2);
+  margin:0 auto 6px auto; max-width:920px}
+.qtxt{font-size:clamp(16px,2.6vw,22px); font-weight:900; color:#0b1a38; text-align:center}
+
+.feedback{grid-area:fb; place-self:center; margin:18px 0 4px; text-align:center; min-height:54px}
+.feedback span{display:inline-block; padding:10px 14px; border-radius:18px; font-weight:900;
+  font-size: clamp(16px, 2.8vw, 20px); box-shadow:0 10px 22px rgba(0,0,0,.10); animation:popIn .22s ease-out both}
+.fb-ok{background:linear-gradient(180deg,#eafff5,#ffffff); color:#0f7f55; border:2px solid #bff2de}
+.fb-no{background:linear-gradient(180deg,#fff4f4,#ffffff); color:#b4233b; border:2px solid #fecdd3}
+@keyframes popIn{0%{transform:translateY(6px) scale(.96); opacity:0}100%{transform:translateY(0) scale(1); opacity:1}}
+
+.options{grid-area:opts; max-width:920px; margin:8px auto 0 auto; display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px}
+.opt{background: linear-gradient(180deg,#ffffff,#f8fbff); border:2px solid rgba(6,18,43,.10);
+  border-radius:18px; padding:16px 14px; min-height:72px;
+  box-shadow: 0 14px 28px rgba(0,0,0,.10);
+  display:flex; align-items:center; gap:10px; cursor:pointer; transition:.16s ease;
+  font-size:clamp(16px,2.6vw,20px); font-weight:900}
+.opt span.key{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:var(--blue2);
+  color:#0b355a;border:2px solid rgba(55,184,255,.35); box-shadow:0 10px 20px rgba(55,184,255,.18)}
+.opt:hover{transform:translateY(-2px); border-color: rgba(55,184,255,.40)}
+.opt.correct{border-color: rgba(55,184,255,.55);
+  box-shadow: 0 0 0 3px rgba(55,184,255,.18), 0 18px 36px rgba(55,184,255,.20)}
+.opt.correct .key{background: linear-gradient(180deg, var(--blue), #8fe3ff); border-color: rgba(55,184,255,.60); color:#06122b}
+.opt.wrong{border-color:#fecaca; box-shadow: 0 0 0 3px rgba(239,68,68,.10), 0 18px 36px rgba(0,0,0,.10)}
+.opt.wrong .key{background:#fff1f2; border-color:#fecdd3; color:#b4233b}
+
+.footer{padding:18px; display:flex; justify-content:center; gap:10px}
+.footer .btn{min-width:220px}
+.hide{display:none !important}
+
+/* Thai prompt highlight */
+.thbox{margin-top:12px;background:linear-gradient(180deg,#fff9f2,#ffffff);
+  border:2px solid rgba(255,216,74,.55); border-radius:18px; padding:12px 14px; box-shadow:0 12px 22px rgba(255,216,74,.18)}
+.thlabel{display:inline-block;font-weight:900;font-size:12px;letter-spacing:.3px;color:#7a5200;
+  background:var(--yellow2); border:2px solid rgba(255,216,74,.55); padding:4px 10px;border-radius:999px;margin-bottom:8px}
+.thtext{font-weight:900;font-size: clamp(20px, 3.6vw, 30px); color:#0b1a38; text-align:center; line-height:1.35; position:relative}
+.thtext:after{content:""; position:absolute; left:10%; right:10%; bottom:-6px; height:6px; border-radius:999px;
+  background:linear-gradient(90deg, var(--blue), var(--yellow)); opacity:.35}
+
+/* Summary: cool KPI */
+.scorePanel{width:min(860px,100%); background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78));
+  border:1px solid rgba(255,255,255,.55); border-radius:22px; padding:16px; box-shadow:0 18px 40px rgba(0,0,0,.12)}
+.kpiGrid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px; margin-top:12px}
+.kpi{border-radius:18px; padding:12px; border:2px solid rgba(6,18,43,.10); background:linear-gradient(180deg,#ffffff,#f8fbff)}
+.kpi .k{font-weight:900;color:#0b1a38;font-size:12px;opacity:.8;letter-spacing:.3px}
+.kpi .v{font-weight:900;font-size:clamp(22px,4.2vw,34px); margin-top:4px}
+.kpi.blue{border-color: rgba(55,184,255,.40)} .kpi.blue .v{color:#0b355a}
+.kpi.yellow{border-color: rgba(255,216,74,.55)} .kpi.yellow .v{color:#7a5200}
+.kpi.green{border-color: rgba(34,197,94,.40)} .kpi.green .v{color:#0f7f55}
+.badge{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; font-weight:900;
+  border:2px solid rgba(55,184,255,.35); background:linear-gradient(90deg, rgba(55,184,255,.20), rgba(255,216,74,.20)); color:#0b1a38}
+.bigScore{font-weight:900; font-size:clamp(44px,10vw,74px); line-height:1;
+  background: linear-gradient(90deg, var(--blue), var(--yellow));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.miniMsg{color:#24324a; font-weight:900; font-size: clamp(14px, 2.6vw, 18px)}
+.sparkle{display:inline-block; filter: drop-shadow(0 10px 16px rgba(55,184,255,.35)); animation:spark 1.6s ease-in-out infinite}
+@keyframes spark{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-2px) rotate(-6deg)}}
+
+@media (max-width:520px){
+  .options{grid-template-columns:1fr;}
+  .kpiGrid{grid-template-columns:1fr;}
+  .sub{display:none}
+}
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="banner">
+      <div class="logo">KP</div>
+      <div class="brand">Kru Pai Classroom</div>
+      <div class="sub">Tense Matching Challenge – Set 2 (TH ➜ EN)</div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <!-- START CARD -->
+    <div id="intro" class="card start">
+      <div class="bigtitle">Tense Matching: TH ➜ EN</div>
+      <div class="tagline">อ่านโจทย์ภาษาไทย แล้วเลือกประโยคภาษาอังกฤษที่ตรงที่สุด (30 ข้อ) — โทน <span style="color:var(--blue)">ฟ้า</span> + <span style="color:var(--orange)">ส้ม</span> น่ารักอ่านง่าย 💙🧡</div>
+      <div class="input"><span>ชื่อเล่น:</span> <input id="nickname" placeholder="พิมพ์ชื่อก่อนเริ่ม"/></div>
+      <button class="btn alt" onclick="startGame()">เริ่มเกมเลย!</button>
+      <div class="note">เหมาะกับประถม: ชีวิตประจำวัน + ฝึก Tense • ตอบถูกมีคำชม • ตอบผิดให้กำลังใจ</div>
+    </div>
+
+    <!-- GAME CARD -->
+    <div id="game" class="card hide">
+      <div class="hud">
+        <div class="pill step">ข้อที่ <b id="step">1</b> / 30</div>
+        <div class="pill score">คะแนน: <b id="score">0</b></div>
+        <div class="pill">ผู้เล่น: <b id="who">-</b></div>
+      </div>
+      <div class="progress"><div id="bar"></div></div>
+
+      <div class="stage">
+        <div class="qbox"><div id="qth" class="qtxt">เลือกประโยคภาษาอังกฤษที่ตรงกับโจทย์ภาษาไทย</div><div class="thbox"><div class="thlabel">โจทย์ภาษาไทย</div><div id="qdesc" class="thtext">—</div></div></div>
+        <div class="feedback" id="fb"></div>
+        <div class="options" id="opts"></div>
+      </div>
+
+      <div class="footer">
+        <button class="btn" onclick="nextQ()" id="nextBtn" disabled>ข้อต่อไป ➜</button>
+      </div>
+    </div>
+
+    <!-- SUMMARY CARD -->
+    <div id="summary" class="card hide" style="padding:22px; display:grid; gap:14px; justify-items:center; text-align:center">
+  <div class="badge"><span class="sparkle">⚡</span> Neo Tense Report</div>
+
+  <div class="bigtitle">ภารกิจสำเร็จแล้ว! 🎉</div>
+
+  <div class="scorePanel">
+    <div class="miniMsg">ผู้เล่น <b id="who2">-</b></div>
+    <div style="margin-top:8px" class="bigScore"><span id="score2">0</span><span style="font-size:.45em;color:#0b1a38"> / 30</span></div>
+    <div class="miniMsg" id="gradeMsg">—</div>
+
+    <div class="kpiGrid">
+      <div class="kpi green">
+        <div class="k">✅ ถูก</div>
+        <div class="v" id="kpiCorrect">0</div>
+      </div>
+      <div class="kpi yellow">
+        <div class="k">❌ ผิด</div>
+        <div class="v" id="kpiWrong">0</div>
+      </div>
+      <div class="kpi blue">
+        <div class="k">🏅 ระดับ</div>
+        <div class="v" id="kpiGrade">A</div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;color:#334155">
+      เคล็ดลับ: สังเกตคำใบ้เวลา (now / every day / yesterday / already / tomorrow) แล้วจะเก่งขึ้นเร็วมาก ✨
+    </div>
+  </div>
+
+  <div class="footer" style="padding:0">
+    <button class="btn alt" onclick="restart()">เล่นใหม่อีกครั้ง</button>
+  </div>
+</div>
+    </div>
+  </div>
+
+<script>
+// 30 items: th (prompt), options [texts], ans (index of correct)
+const ITEMS = [
+  {th:"เธอกำลังทำการบ้านอยู่ตอนนี้", options:["She does her homework now.","She did her homework yesterday.","She is doing her homework now.","She will do her homework tomorrow."], ans:2},
+  {th:"เขาไปโรงเรียนทุกวัน", options:["He goes to school every day.","He is going to school now.","He went to school yesterday.","He has gone to school."], ans:0},
+  {th:"ฉันได้กินข้าวเช้าแล้ว", options:["I eat breakfast every day.","I am eating breakfast.","I ate breakfast this morning.","I have eaten breakfast already."], ans:3},
+  {th:"เราดูหนังเมื่อวาน", options:["We are watching a movie now.","We watched a movie yesterday.","We have watched a movie.","We will watch a movie tomorrow."], ans:1},
+  {th:"พวกเขาจะไปเที่ยวทะเลสุดสัปดาห์หน้า", options:["They go to the beach every weekend.","They went to the beach last weekend.","They will go to the beach next weekend.","They have gone to the beach already."], ans:2},
+  {th:"แมวกินปลา", options:["Cats eat fish.","Cats are eating fish now.","Cats ate fish yesterday.","Cats have eaten fish."], ans:0},
+  {th:"ตอนนี้ฝนกำลังตก", options:["It rains every day.","It rained yesterday.","It is raining now.","It will rain tomorrow."], ans:2},
+  {th:"ฉันทำการบ้านเสร็จแล้ว", options:["I do my homework now.","I have finished my homework.","I finished my homework yesterday.","I will finish my homework later."], ans:1},
+  {th:"เขาโทรหาฉันเมื่อเช้า", options:["He calls me every morning.","He is calling me now.","He has called me this morning.","He called me this morning."], ans:3},
+  {th:"เราจะช่วยคุณหลังเลิกเรียน", options:["We will help you after school.","We helped you after school.","We are helping you after school.","We have helped you after school."], ans:0},
+  {th:"เธอมักจะอ่านหนังสือก่อนนอน", options:["She is reading books now.","She usually reads books before bed.","She read books yesterday.","She has read books."], ans:1},
+  {th:"เด็กๆกำลังเล่นฟุตบอลอยู่ในสนาม", options:["The children play football in the field.","The children are playing football in the field.","The children played football yesterday.","The children have played football."], ans:1},
+  {th:"เขาไปเชียงใหม่มาแล้วสามครั้ง", options:["He goes to Chiang Mai three times.","He is going to Chiang Mai.","He has been to Chiang Mai three times.","He went to Chiang Mai three times."], ans:2},
+  {th:"ฉันกำลังกินข้าวอยู่ตอนนี้", options:["I eat rice now.","I ate rice this morning.","I will eat rice later.","I am eating rice now."], ans:3},
+  {th:"เราทำความสะอาดห้องเมื่อชั่วโมงที่แล้ว", options:["We cleaned the room an hour ago.","We clean the room every hour.","We are cleaning the room now.","We have cleaned the room."], ans:0},
+  {th:"รถบัสออกทุกเช้าเวลาเจ็ดโมง", options:["The bus is leaving at seven every morning.","The bus leaves every morning at seven.","The bus left at seven yesterday.","The bus has left at seven."], ans:1},
+  {th:"พรุ่งนี้เธอจะไปหาคุณครู", options:["She goes to the teacher tomorrow.","She is visiting the teacher tomorrow.","She visited the teacher tomorrow.","She will visit the teacher tomorrow."], ans:3},
+  {th:"ฉันยังไม่เคยไปญี่ปุ่น", options:["I have never been to Japan.","I never go to Japan.","I didn't go to Japan.","I am not going to Japan."], ans:0},
+  {th:"ตอนนี้เขากำลังอ่านหนังสือ", options:["He reads a book now.","He is reading a book now.","He read a book yesterday.","He will read a book later."], ans:1},
+  {th:"เมื่อวานฝนตกหนัก", options:["It rains heavily yesterday.","It is raining heavily now.","It rained heavily yesterday.","It will rain heavily tomorrow."], ans:2},
+  {th:"เธอทำอาหารเช้าให้ครอบครัวทุกวัน", options:["She is cooking breakfast for her family now.","She cooks breakfast for her family every day.","She has cooked breakfast for her family.","She cooked breakfast for her family yesterday."], ans:1},
+  {th:"เรากำลังเตรียมตัวสำหรับการสอบวันนี้", options:["We are preparing for the exam today.","We prepare for the exam every day.","We will prepare for the exam tomorrow.","We prepared for the exam yesterday."], ans:0},
+  {th:"ฉันจะโทรหาคุณตอนเย็น", options:["I called you in the evening.","I am calling you in the evening.","I will call you in the evening.","I have called you in the evening."], ans:2},
+  {th:"เขาได้ทำโปรเจ็กต์เสร็จเรียบร้อยแล้ว", options:["He finishes the project.","He finished the project yesterday.","He will finish the project tomorrow.","He has finished the project."], ans:3},
+  {th:"นักเรียนกำลังฟังครูอยู่ในตอนนี้", options:["The students listen to the teacher now.","The students are listening to the teacher now.","The students listened to the teacher yesterday.","The students will listen to the teacher."], ans:1},
+  {th:"นกบินบนท้องฟ้า", options:["Birds fly in the sky.","Birds are flying in the sky now.","Birds flew in the sky yesterday.","Birds have flown in the sky."], ans:0},
+  {th:"ฉันกินข้าวกลางวันแล้ว", options:["I eat lunch now.","I have had lunch already.","I will have lunch later.","I had lunch yesterday."], ans:1},
+  {th:"เมื่อคืนเราดูข่าว", options:["We watch the news every night.","We are watching the news now.","We watched the news last night.","We have watched the news."], ans:2},
+  {th:"เขาจะไปสนามบินตอนหกโมงเช้า", options:["He goes to the airport at six in the morning.","He went to the airport at six in the morning.","He will go to the airport at six in the morning.","He has gone to the airport."], ans:2},
+  {th:"พ่อของฉันขับรถไปทำงานทุกวัน", options:["My dad drives to work every day.","My dad is driving to work now.","My dad drove to work yesterday.","My dad has driven to work."], ans:0}
+];
+
+function computeGrade(s,total){
+  const p = total? (s/total) : 0;
+  if(p>=0.93) return {g:'S', msg:'สุดยอดมาก! ระดับ S ✨ เก่งแบบโปรเลย'};
+  if(p>=0.80) return {g:'A', msg:'เก่งมาก! ระดับ A 💙 แม่นขึ้นทุกวัน'};
+  if(p>=0.67) return {g:'B', msg:'ดีมาก! ระดับ B 👍 เล่นซ้ำอีกนิดจะพุ่งเลย'};
+  if(p>=0.50) return {g:'C', msg:'เริ่มเข้าที่แล้ว! ระดับ C 🙂 ลองดูคำใบ้เวลาให้มากขึ้น'};
+  return {g:'D', msg:'ไม่เป็นไรนะ 🙂 เล่นซ้ำได้เลย เดี๋ยวเก่งขึ้นแน่นอน'};
+}
+
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+
+let order = shuffle([...Array(ITEMS.length).keys()]);
+let idx = 0, score = 0, lock=false, nickname="";
+let optOrder = []; // per question option shuffle
+
+function startGame(){
+  nickname = (document.getElementById('nickname').value || "ผู้เล่น").trim();
+  document.getElementById('who').textContent = nickname;
+  document.getElementById('who2').textContent = nickname;
+  document.getElementById('intro').classList.add('hide');
+  document.getElementById('game').classList.remove('hide');
+  idx = 0; score = 0; lock=false;
+  order = shuffle([...Array(ITEMS.length).keys()]);
+  renderQ();
+  beep(1000,0.06,'triangle');
+}
+document.getElementById('nickname').addEventListener('keydown',e=>{ if(e.key==='Enter'){ startGame(); }});
+
+function renderQ(){
+  lock=false;
+  const item = ITEMS[ order[idx] ];
+  document.getElementById('step').textContent = (idx+1);
+  document.getElementById('score').textContent = score;
+  document.getElementById('bar').style.width = ((idx)/ITEMS.length*100)+'%';
+  document.getElementById('qth').textContent = "เลือกประโยคภาษาอังกฤษที่ตรงกับโจทย์ภาษาไทย";
+  document.getElementById('qdesc').textContent = '“ ' + item.th + ' ”';
+
+  // shuffle option indices
+  optOrder = shuffle([0,1,2,3]);
+  const container = document.getElementById('opts');
+  container.innerHTML = "";
+  const ids = ['A','B','C','D'];
+  optOrder.forEach((k,i)=>{
+    const div = document.createElement('div');
+    div.className = 'opt';
+    div.innerHTML = `<span class="key">${ids[i]}</span> ${item.options[k]}`;
+    div.addEventListener('click', ()=> choose(k, div, item.ans, container));
+    container.appendChild(div);
+  });
+
+  document.getElementById('fb').textContent = "";
+  document.getElementById('nextBtn').disabled = true;
+}
+
+function choose(k, el, correctIndex, container){
+  if(lock) return;
+  const opts = [...container.querySelectorAll('.opt')];
+  lock = true;
+
+  if(k === correctIndex){
+    el.classList.add('correct');
+    score += 1;
+    document.getElementById('score').textContent = score;
+    document.getElementById('fb').innerHTML = `<span class="fb-ok">เก่งมากจ้า 💙</span>`;
+    beep(1200,0.08,'triangle');
+  }else{
+    el.classList.add('wrong');
+    const iView = optOrder.indexOf(correctIndex);
+    if(iView>=0) opts[iView].classList.add('correct');
+    document.getElementById('fb').innerHTML = `<span class="fb-no">ยังไม่ใช่ ลองสังเกตคำบอกเวลา/โครงสร้างอีกนิดนะ 🧡</span>`;
+    beep(220,0.10,'sawtooth');
+  }
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function nextQ(){
+  if(idx < ITEMS.length-1){
+    idx++;
+    renderQ();
+  }else{
+    endGame();
+  }
+}
+
+function endGame(){
+  document.getElementById('game').classList.add('hide');
+  document.getElementById('summary').classList.remove('hide');
+
+  // score + KPIs
+  const total = ITEMS.length;
+  const correct = score;
+  const wrong = total - score;
+
+  document.getElementById('score2').textContent = correct;
+  document.getElementById('kpiCorrect').textContent = correct;
+  document.getElementById('kpiWrong').textContent = wrong;
+
+  const r = computeGrade(correct, total);
+  document.getElementById('kpiGrade').textContent = r.g;
+  document.getElementById('gradeMsg').textContent = r.msg;
+
+  document.getElementById('bar').style.width = '100%';
+
+  // victory sound
+  beep(880,0.12,'sine'); setTimeout(()=>beep(1320,0.12,'sine'),120);
+}
+
+function restart(){
+  score=0; idx=0; lock=false; order=shuffle([...Array(ITEMS.length).keys()]);
+  document.getElementById('summary').classList.add('hide');
+  document.getElementById('intro').classList.remove('hide');
+}
+
+/* Simple WebAudio beeps */
+function beep(f=880, d=0.08, type='sine'){
+  try{
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = type; o.frequency.value = f; o.connect(g); g.connect(ctx.destination);
+    const now = ctx.currentTime;
+    g.gain.setValueAtTime(0.001, now);
+    g.gain.exponentialRampToValueAtTime(0.2, now + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.001, now + d);
+    o.start(); o.stop(now + d + 0.02);
+  }catch(e){/* ignore */}
+}
+</script>
+</body>
+</html>
